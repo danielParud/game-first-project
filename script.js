@@ -15,8 +15,6 @@ setInterval(function(){
     if(jumping==0){
         character.style.top = (characterTop+3)+"px";
     }
-    const characterLeft = parseInt(window.getComputedStyle(character).getPropertyValue("left"));
-    const characterRight = characterLeft + parseInt(window.getComputedStyle(character).getPropertyValue("width"));
     const blockLeft = parseInt(window.getComputedStyle(block).getPropertyValue("left"));
     const holeTop = parseInt(window.getComputedStyle(hole).getPropertyValue("top"));
     const cTop = -(500-characterTop);
@@ -35,22 +33,6 @@ setInterval(function(){
         counter = 0;
       }
 
-  if (characterTop < boxTop) {
-    character.style.top = boxTop + "px";
-  } else if (
-    characterTop >
-    boxTop + boxHeight - parseInt(
-      window.getComputedStyle(character).getPropertyValue("height")
-    )
-  ) {
-    character.style.top =
-      boxTop +
-      boxHeight -
-      parseInt(
-        window.getComputedStyle(character).getPropertyValue("height")
-      ) +
-      "px";
-  }
 
 
 },10);
