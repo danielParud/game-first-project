@@ -1,5 +1,6 @@
 const playBtn = document.getElementById("play-btn");
 const game = document.getElementById("game");
+const scoreElem = document.getElementById("score");
 const box = document.getElementById("game");
 const block = document.getElementById("block");
 const hole = document.getElementById("hole");
@@ -11,18 +12,21 @@ playBtn.addEventListener("click", () => {
     document.getElementById("start-screen").remove(); // Remove the initial page
     startGame(); // Start the 3-second countdown before the game starts
   });
+  
+  // Event listener for hole animation iteration
+hole.addEventListener('animationiteration', () => {
+    const random = -((Math.random()*300)+150);
+    hole.style.top = random + "px";
+    counter++;
+    scoreElem.textContent = counter;
+  });
 
 function startGame (){
 let jumping = 0;
 let counter = 0;
 
-hole.addEventListener('animationiteration', () => {
-    const random = -((Math.random()*300)+150);
-    hole.style.top = random + "px";
-    counter++;
-});
 setInterval(function(){
-    const characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
+    let characterTop = parseInt(window.getComputedStyle(character).getPropertyValue("top"));
     if(jumping==0){
         character.style.top = (characterTop+2)+"px";
     }
@@ -40,13 +44,25 @@ setInterval(function(){
          (blockLeft > -50) &&
           ((cTop < holeTop) || (cTop > holeTop + 130)) 
       ) {
-        alert("Game over. Score: " + (counter - 1)); 
+        game.style.display = "none"; // Hide the game page
+        const gameOver = document.getElementById("game-over");
+        gameOver.style.display = "block"; // Show the game over page
+        document.getElementById("scoreFinal").textContent = counter - 1; // Set the final score
+        document.getElementById("restart-btn").addEventListener("click", () => {
+          location.reload(); // Reload the page to restart the game
+        });
         character.style.top = 100 + "px";
         counter = 0;
       }
-    }
+    },10);
     
-    ,10);}
+     // Event listener for hole animation iteration
+     hole.addEventListener('animationiteration', () => {
+       const random = -((Math.random()*300)+150);
+       hole.style.top = random + "px";
+       counter++;
+       scoreElem.textContent = counter;
+  });}
 
 function jump(){ 
     jumping = 1;
