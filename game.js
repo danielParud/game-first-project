@@ -19,14 +19,15 @@ function startGame() {
       (blockLeft > -50) &&
       ((cTop < holeTop) || (cTop > holeTop + 130)) 
     ) {
-      gameOver();
+      alert("Game over. Score: "+(counter-1));
+        character.style.top = 210 + "px";
+        counter=0;
     }
   },10);
 
   hole.addEventListener('animationiteration', () => {
     const random = -((Math.random()*300)+150);
     hole.style.top = random + "px";
-    counter++;
     scoreElem.textContent = counter;
   });
 }
@@ -46,16 +47,4 @@ function jump() {
     }
     jumpCount++;
   },10);
-}
-
-function gameOver() {
-  game.style.display = "none";
-  const gameOver = document.getElementById("game-over");
-  gameOver.style.display = "block";
-  document.getElementById("scoreFinal").textContent = counter - 1;
-  document.getElementById("restart-btn").addEventListener("click", () => {
-    location.reload();
-  });
-  character.style.top = 100 + "px";
-  counter = 0;
 }
